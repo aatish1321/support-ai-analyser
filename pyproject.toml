@@ -1,0 +1,23 @@
+[project]
+name = "support-ai-analyser"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Aatish Ajay", email = "aatishajay@gmail.com" }
+]
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "google-genai>=2.24.0",
+    "pandas>=3.0.5",
+    "pydantic>=2.13.5",
+    "python-dotenv>=1.2.3",
+    "streamlit>=1.64.0",
+]
+
+[project.scripts]
+support-ai-analyser = "support_ai_analyser:main"
+
+[build-system]
+requires = ["uv_build>=0.12.7,<0.13.0"]
+build-backend = "uv_build"

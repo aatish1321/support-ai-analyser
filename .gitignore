@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+*.egg-info/
+.pytest_cache/
+
+# Build files
+build/
+dist/
+wheels/
+
+# Virtual environments
+.venv/
+
+# Environment variables / secrets
+.env
+.streamlit/secrets.toml
