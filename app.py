@@ -1,4 +1,10 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+from groq import Groq
+
+load_dotenv()
+client = Groq()
 
 st.set_page_config(
     page_title="AI Support Ticket Analyzer",
@@ -22,5 +28,16 @@ if st.button("Analyze Ticket", type="primary"):
     if not ticket.strip():
         st.warning("Please enter a customer support ticket.")
     else:
-        st.success("Ticket received!")
-        st.write(ticket)
+        with st.spinner("Analyzing with Groq..."):
+            response = client.chat.completions.create(
+                messages=[
+                    {
+                        "role": "user",
+                        "content": f"Briefly summarize this customer support ticket: {ticket}",
+                    }
+                ],
+                model="openai/gpt-oss-20b",
+            )
+            
+            st.write(response.choices[0].message.content)
+
