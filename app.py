@@ -8,7 +8,6 @@ client = Groq()
 
 st.set_page_config(
     page_title="AI Support Ticket Analyzer",
-    page_icon="🎫",
     layout="wide",
 )
 
@@ -28,7 +27,7 @@ if st.button("Analyze Ticket", type="primary"):
     if not ticket.strip():
         st.warning("Please enter a customer support ticket.")
     else:
-        with st.spinner("Analyzing with Groq..."):
+        with st.spinner("Analyzing with ai..."):
             response = client.chat.completions.create(
                 messages=[
                     {
