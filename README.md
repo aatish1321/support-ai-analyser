@@ -1,6 +1,6 @@
-## Project: AI Support Ticket Analyzer
+# Project: AI Support Ticket Analyzer
 
-# A user pastes a customer complaint/support ticket, or uploads a CSV containing many tickets. Your application processes each ticket and generates:
+## A user pastes a customer complaint/support ticket, or uploads a CSV containing many tickets. Your application processes each ticket and generates:
 
 - Issue category
 - Short summary
