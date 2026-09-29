@@ -30,10 +30,20 @@ if st.button("Analyze Ticket", type="primary"):
         with st.spinner("Analyzing with ai..."):
             response = client.chat.completions.create(
                 messages=[
+
+                    {
+                        "role":"system",
+                        "content":"""You are an expert customer support operations analyst. Your job is to analyze customer support tickets and provide a brief summary of the issue, the urgency, 
+                        and any recommended actions. Please provide a concise summary in 2-3 sentences."""
+                    },
+                                   
+
+
                     {
                         "role": "user",
                         "content": f"Briefly summarize this customer support ticket: {ticket}",
                     }
+
                 ],
                 model="openai/gpt-oss-20b",
             )
