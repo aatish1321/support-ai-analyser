@@ -34,7 +34,7 @@ if st.button("Analyze Ticket", type="primary"):
                     {
                         "role":"system",
                         "content":"""You are an expert customer support operations analyst. Your job is to analyze customer support tickets and provide a brief summary of the issue, the urgency, 
-                        and any recommended actions. Please provide a concise summary in 2-3 sentences."""
+                        and any recommended actions. Please provide a concise summary in strict formatting using markdown and use use bold labels or bullet points for the Summary, Urgency, and Recommended Actions."""
                     },
                                    
 
@@ -46,6 +46,8 @@ if st.button("Analyze Ticket", type="primary"):
 
                 ],
                 model="openai/gpt-oss-20b",
+                temperature=0.2,
+                max_tokens=300
             )
             
             st.write(response.choices[0].message.content)
