@@ -2,6 +2,21 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 from groq import Groq
+import json
+from pydantic import BaseModel
+
+
+
+class TicketAnalysis(BaseModel):
+    category: str
+    urgency: str
+    sentiment: str
+    summary: str
+    key_issues: list[str]
+    recommended_actions: list[str]
+    customer_response: str
+
+
 
 load_dotenv()
 client = Groq()
@@ -32,9 +47,19 @@ if st.button("Analyze Ticket", type="primary"):
                 messages=[
 
                     {
-                        "role":"system",
-                        "content":"""You are an expert customer support operations analyst. Your job is to analyze customer support tickets and provide a brief summary of the issue, the urgency, 
-                        and any recommended actions. Please provide a concise summary in strict formatting using markdown and use use bold labels or bullet points for the Summary, Urgency, and Recommended Actions."""
+                        "role": "system",
+                        "content":  """You are an expert customer support operations analyst. 
+                     Analyze the ticket and output ONLY valid JSON using this exact structure:
+                    {
+                        "category": "Issue category (e.g., Delivery, Billing, Tech Support)",
+                        "urgency": "Low, Medium, or High",
+                        "sentiment": "Positive, Neutral, or Negative",
+                        "summary": "1-2 sentence summary",
+                        "key_issues": ["bullet 1", "bullet 2"],
+                        "recommended_actions": ["step 1", "step 2"],
+                        "customer_response": "A polite, professional draft reply to the customer"
+                    }"""
+                
                     },
                                    
 
@@ -47,8 +72,11 @@ if st.button("Analyze Ticket", type="primary"):
                 ],
                 model="openai/gpt-oss-20b",
                 temperature=0.2,
-                max_tokens=300
+                max_tokens=800,
+                response_format={"type": "json_object"},
             )
             
-            st.write(response.choices[0].message.content)
+            raw_text = response.choices[0].message.content
+            validated_data = TicketAnalysis.model_validate_json(raw_text)
+            st.json(validated_data.model_dump())
 
